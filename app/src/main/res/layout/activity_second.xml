@@ -32,17 +32,17 @@
             android:textSize="19sp" />
 
         <TextView
-            android:id="@+id/headerOne"
+            android:id="@+id/infoTemperature"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="35dp"
             android:gravity="start"
-            android:text="Температура сейчас:"
+            android:text="Данные температуры не доступны"
             android:textColor="#FF2E4A66"
             android:textSize="19sp" />
 
         <TextView
-            android:id="@+id/infoTemperature"
+            android:id="@+id/infoTemperature1"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="35dp"

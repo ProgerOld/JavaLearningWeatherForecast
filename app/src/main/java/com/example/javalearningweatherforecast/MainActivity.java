@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     private Intent intent; // поле намерения переключения активностей
     private final String APP_WEATHER = "Weather"; // константа названия настроек
     private final String CITY = "City"; // константа названия переменной города
+    private final String API_KEY = "API Key"; // константа названия API Key
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +32,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // считывание настроек выбранного города, данной переменной назначается NoCity если данной настройки нет
                 String choiceCity = settings.getString(CITY, "NoCity");
+                String choiceKey = settings.getString(API_KEY, "NoKey");
 
                 // если данной настройки не нашлось, то переключаемся на активность настроек города
-                if (choiceCity.equals("NoCity")) {
+                if (choiceCity.equals("NoCity") || choiceKey.equals("NoKey")) {
                     // переключение на активность настроек
                     intent = new Intent(getApplicationContext(), SettingActivity.class);
                 } else { // иначе переключаемся на активность показа погоды

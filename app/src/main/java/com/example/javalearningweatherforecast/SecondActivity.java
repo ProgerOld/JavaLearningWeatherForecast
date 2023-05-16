@@ -31,12 +31,17 @@ public class SecondActivity extends AppCompatActivity implements Runnable{
     private SharedPreferences settings; // поле настроек приложения
     private final String APP_WEATHER = "Weather"; // константа названия настроек
     private final String CITY = "City"; // константа названия переменной города
+    private final String API_KEY = "API Key"; // константа названия API Key
 
     // дополнительные поля интернет соединения
+    //https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}&units=metric&lang=ru
+    //https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}&units=metric&lang=ru
+
     private final String URL_SERVER = "https://api.openweathermap.org/data/2.5/weather?q="; // url сервера
-    private final String KEY = "&appid=442b8bb5fc8532910e015a9e01686d77"; // ключ доступа к сервисам сервера (получается при регистрации на https://openweathermap.org)
+    private final String APPID = "&appid="; // Параметр ключа доступа к сервисам сервера (получается при регистрации на https://openweathermap.org)
     private final String EXTRA_OPTIONS = "&units=metric&lang=ru"; // настройки поиска на русском языке
     private String choiceCity; // поле названия населённого пункта
+    private String choiceKey; // поле названия населённого пункта
     private String request; // url для запросов на сервер
     private String response; // ответ с сервера в виде JSON
     private HttpsURLConnection connection; // поле интернет соединения
@@ -58,6 +63,7 @@ public class SecondActivity extends AppCompatActivity implements Runnable{
         settings = getSharedPreferences(APP_WEATHER, MODE_PRIVATE);
         // считывание настроек выбранного города, данной переменной назначается NoCity если данной настройки нет
         choiceCity = settings.getString(CITY, "NoCity");
+        choiceKey = settings.getString(API_KEY, "NoKey");
 
         // вывод на экран информации о городе
         infoCity.setText("В населённом пункте " + choiceCity);
@@ -82,7 +88,7 @@ public class SecondActivity extends AppCompatActivity implements Runnable{
     @Override
     public void run() {
         // определение url для запросов на сервер
-        request = URL_SERVER + choiceCity + KEY + EXTRA_OPTIONS;
+        request = URL_SERVER + choiceCity + APPID + choiceKey + EXTRA_OPTIONS;
 
         // запрос на сервер
 
@@ -109,7 +115,11 @@ public class SecondActivity extends AppCompatActivity implements Runnable{
                 public void run() {
                     // вывод данных с JSON файла
                     try {
-                        infoTemperature.setText(jsonObject.getJSONObject("main").getDouble("temp") + " градусов");
+                        String temp = String.valueOf(jsonObject.getJSONObject("main").getDouble("temp"));
+                        String weather = jsonObject.getJSONObject("weather").getString("description");
+
+                        infoTemperature.setText("Температура сейчас: " + temp + " градусов");
+
                     } catch (JSONException e) { // исключение отсутствия JSON объекта
                         e.printStackTrace();
                     }
