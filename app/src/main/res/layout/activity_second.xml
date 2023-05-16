@@ -28,7 +28,7 @@
             android:gravity="center"
             android:hint="Населённый пункт не выбран"
             android:textColor="#FF2E4A66"
-            android:textColorHint="#607E9C"
+            android:textColorHint="#FF2E4A66"
             android:textSize="19sp" />
 
         <TextView
@@ -37,17 +37,51 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="35dp"
             android:gravity="start"
-            android:text="Данные температуры не доступны"
+            android:hint="Данные температуры не доступны"
             android:textColor="#FF2E4A66"
+            android:textColorHint="#607E9C"
             android:textSize="19sp" />
 
         <TextView
-            android:id="@+id/infoTemperature1"
+            android:id="@+id/infoPressure"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="10dp"
             android:gravity="start"
-            android:hint="Данные температуры не доступны"
+            android:hint="Данные давления не доступны"
+            android:textColor="#FF2E4A66"
+            android:textColorHint="#607E9C"
+            android:textSize="19sp" />
+
+        <TextView
+            android:id="@+id/infoWind"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="start"
+            android:hint="Данные ветра не доступны"
+            android:textColor="#FF2E4A66"
+            android:textColorHint="#607E9C"
+            android:textSize="19sp" />
+
+        <TextView
+            android:id="@+id/infoWeather"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="start"
+            android:hint="Данные облачности не доступны"
+            android:textColor="#FF2E4A66"
+            android:textColorHint="#607E9C"
+            android:textSize="19sp" />
+
+        <TextView
+            android:id="@+id/infoVisibility"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="start"
+            android:hint="Данные видимости не доступны"
             android:textColor="#FF2E4A66"
             android:textColorHint="#607E9C"
             android:textSize="19sp" />

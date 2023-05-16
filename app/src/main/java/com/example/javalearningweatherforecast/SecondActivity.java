@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Dumpable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,6 +21,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DecimalFormat;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -27,6 +30,10 @@ public class SecondActivity extends AppCompatActivity implements Runnable{
     // создание полей
     private TextView infoCity; // поле информации о населённом пункте
     private TextView infoTemperature; // поле информации о температуре
+    private TextView infoPressure; // поле информации о давлении
+    private TextView infoWind; // поле информации о ветре
+    private TextView infoWeather; // поле информации о облачности
+    private TextView infoVisibility; // поле информации о видимости
     private Button buttonSetting; // поле кнопки перехода к настройкам
     private SharedPreferences settings; // поле настроек приложения
     private final String APP_WEATHER = "Weather"; // константа названия настроек
@@ -57,6 +64,11 @@ public class SecondActivity extends AppCompatActivity implements Runnable{
         // присваивание id полям
         infoCity = findViewById(R.id.infoCity);
         infoTemperature = findViewById(R.id.infoTemperature);
+        infoPressure = findViewById(R.id.infoPressure);
+        infoWind = findViewById(R.id.infoWind);
+        infoWeather = findViewById(R.id.infoWeather);
+        infoVisibility = findViewById(R.id.infoVisibility);
+
         buttonSetting = findViewById(R.id.buttonSetting);
 
         // создание объекта работы с настройками приложения
@@ -69,6 +81,10 @@ public class SecondActivity extends AppCompatActivity implements Runnable{
         infoCity.setText("В населённом пункте " + choiceCity);
 
         infoTemperature.setText("Данные обновляются ..."); // вывод данных до получения данных с сервера
+        infoPressure.setText("Данные обновляются ..."); // вывод данных до получения данных с сервера
+        infoWind.setText("Данные обновляются ..."); // вывод данных до получения данных с сервера
+        infoWeather.setText("Данные обновляются ..."); // вывод данных до получения данных с сервера
+        infoVisibility.setText("Данные обновляются ..."); // вывод данных до получения данных с сервера
 
         handler = new Handler(); // создание объекта обработчика сообщений
         new Thread(this).start(); // запуск фонового потока
@@ -115,10 +131,21 @@ public class SecondActivity extends AppCompatActivity implements Runnable{
                 public void run() {
                     // вывод данных с JSON файла
                     try {
-                        String temp = String.valueOf(jsonObject.getJSONObject("main").getDouble("temp"));
-                        String weather = jsonObject.getJSONObject("weather").getString("description");
+                        String strTemp = String.valueOf(jsonObject.getJSONObject("main").getDouble("temp")) + " градусов";
+                        Double doublePressure = jsonObject.getJSONObject("main").getDouble("pressure")*0.750064;
+                        String strPressure = new DecimalFormat( "#.##" ).format(doublePressure) + " мм/рст";
+                        String strWind = jsonObject.getJSONObject("wind").getString("speed") + " м/с";
+                        JSONArray arrWeather = jsonObject.getJSONArray("weather");
+                        String strWeather = arrWeather.getJSONObject(0).getString("description");
+                        Integer intVisibility = jsonObject.getInt("visibility")/1000;
+                        String strVisibility = new DecimalFormat( "#.###" ).format(intVisibility) + " км";
 
-                        infoTemperature.setText("Температура сейчас: " + temp + " градусов");
+                        infoTemperature.setText("Температура: " + strTemp);
+                        infoPressure.setText("Давление: " + strPressure); // вывод данных до получения данных с сервера
+                        infoWind.setText("Ветер: " + strWind); // вывод данных до получения данных с сервера
+                        infoWeather.setText("Облачность: " + strWeather); // вывод данных до получения данных с сервера
+                        infoVisibility.setText("Видимость: " + strVisibility); // вывод данных до получения данных с сервера
+
 
                     } catch (JSONException e) { // исключение отсутствия JSON объекта
                         e.printStackTrace();
