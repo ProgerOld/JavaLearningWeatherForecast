@@ -131,6 +131,7 @@ public class SecondActivity extends AppCompatActivity implements Runnable{
                 public void run() {
                     // вывод данных с JSON файла
                     try {
+                        //Получем данные с JSON
                         String strTemp = String.valueOf(jsonObject.getJSONObject("main").getDouble("temp")) + " градусов";
                         Double doublePressure = jsonObject.getJSONObject("main").getDouble("pressure")*0.750064;
                         String strPressure = new DecimalFormat( "#.##" ).format(doublePressure) + " мм/рст";
