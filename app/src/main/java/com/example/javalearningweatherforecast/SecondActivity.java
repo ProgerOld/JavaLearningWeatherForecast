@@ -156,6 +156,7 @@ public class SecondActivity extends AppCompatActivity implements Runnable{
 
 
         } catch (MalformedURLException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);// исключение на случай отсутствия ссылки request
         } catch (IOException e) {
             throw new RuntimeException(e); // исключение на случай отсутствия соединения
