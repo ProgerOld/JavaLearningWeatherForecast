@@ -52,22 +52,24 @@ public class SettingActivity extends AppCompatActivity {
                 String nameCity = editCity.getText().toString();
                 String apiKey = editKey.getText().toString();
 
-                Boolean isSave = false;
+                Boolean isSave = true;
 
                 // если пользователь ничего не ввёл, то остаёмся в этой же активности
                 if (nameCity.equals("")) {
                     // сообщение пользователю об отсутствии введённого города
                     Toast toast = Toast.makeText(getApplicationContext(), "Вы не ввели название населённого пункта", Toast.LENGTH_SHORT);
                     toast.show();
-                } else if (apiKey.equals("")) {
+                    isSave = false;
+                }
+                if (apiKey.equals("")) {
                     // сообщение пользователю об отсутствии введённого города
                     Toast toast = Toast.makeText(getApplicationContext(), "Вы не ввели API Key", Toast.LENGTH_SHORT);
                     toast.show();
-                } else { // иначе сохраняем (пересохраняем) эти данные и переключаемся в активность прогноза погоды
-                    isSave = true;
+                    isSave = false;
                 }
 
                 if (isSave){
+                    // сохраняем (пересохраняем) эти данные и переключаемся в активность прогноза погоды
                     // запись новой настройки
                     editor = settings.edit(); // создание объекта для доступа к изменению настроек
                     editor.putString(CITY, nameCity); // запись настроек
